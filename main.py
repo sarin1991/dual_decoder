@@ -1,7 +1,7 @@
 import torch
 from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset
-from transformers import AutoTokenizer, TrainingArguments, AutoModelForCausalLM, AutoConfig
+from transformers import AutoTokenizer, TrainingArguments, AutoModelForCausalLM, AutoConfig, AutoModel
 from dataclasses import dataclass, field
 from typing import Optional
 import transformers
@@ -10,6 +10,7 @@ torch.backends.cuda.matmul.allow_tf32=True
 @dataclass
 class CustomTrainingArguments(SFTConfig):
     pretrained_model: str = field(default=None)
+    config_path: str = field(default=None)
     model_output_path: str = field(default=None)
     max_seq_length: int = field(default=8192)
     response_template: str = field(default="[/INST]")
@@ -27,7 +28,11 @@ def main():
     tokenizer.truncation_side = "left"
 
     train_dataset = load_dataset("HuggingFaceTB/cosmopedia", "web_samples_v1", split="train", streaming=True)
-    model = AutoModelForCausalLM.from_pretrained(training_args.pretrained_model,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
+    if training_args.config_path:
+        config = AutoConfig.from_pretrained(training_args.config_path,attn_implementation="flash_attention_2")
+        model = AutoModel.from_config(config)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(training_args.pretrained_model,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
     model.to('cuda')
     trainer = SFTTrainer(
         model=model,
