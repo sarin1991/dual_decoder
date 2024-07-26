@@ -2,6 +2,7 @@ import torch
 from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset
 from transformers import AutoTokenizer, TrainingArguments, AutoModelForCausalLM, AutoConfig, AutoModel
+from transformers.models.dual_mistral import DualMistralConfig
 from dataclasses import dataclass, field
 from typing import Optional
 import transformers
@@ -29,7 +30,7 @@ def main():
 
     train_dataset = load_dataset("HuggingFaceTB/cosmopedia", "web_samples_v1", split="train", streaming=True)
     if training_args.config_path:
-        config = AutoConfig.from_pretrained(training_args.config_path,attn_implementation="flash_attention_2")
+        config = DualMistralConfig.from_pretrained(training_args.config_path,attn_implementation="flash_attention_2")
         model = AutoModel.from_config(config)
     else:
         model = AutoModelForCausalLM.from_pretrained(training_args.pretrained_model,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
