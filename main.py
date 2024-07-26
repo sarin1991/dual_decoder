@@ -1,5 +1,5 @@
 import torch
-from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
+from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset
 from transformers import AutoTokenizer, TrainingArguments, AutoModelForCausalLM, AutoConfig
 from dataclasses import dataclass, field
@@ -8,7 +8,7 @@ import transformers
 torch.backends.cuda.matmul.allow_tf32=True
 
 @dataclass
-class CustomTrainingArguments(TrainingArguments):
+class CustomTrainingArguments(SFTConfig):
     pretrained_model: str = field(default=None)
     model_output_path: str = field(default=None)
     max_seq_length: int = field(default=8192)
