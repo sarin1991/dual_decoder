@@ -4,6 +4,7 @@ from datasets import load_dataset
 from transformers import AutoTokenizer, TrainingArguments, AutoModelForCausalLM, AutoConfig
 from dataclasses import dataclass, field
 from typing import Optional
+import transformers
 torch.backends.cuda.matmul.allow_tf32=True
 
 @dataclass
