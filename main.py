@@ -9,7 +9,6 @@ torch.backends.cuda.matmul.allow_tf32=True
 
 @dataclass
 class CustomTrainingArguments(TrainingArguments):
-    training_dataset: str = field(default='HuggingFaceTB/cosmopedia')
     pretrained_model: str = field(default=None)
     model_output_path: str = field(default=None)
     max_seq_length: int = field(default=8192)
@@ -27,7 +26,7 @@ def main():
         tokenizer.pad_token_id = tokenizer.eos_token_id
     tokenizer.truncation_side = "left"
 
-    train_dataset = load_dataset(training_args.training_dataset, split="train", streaming=True)
+    train_dataset = load_dataset("HuggingFaceTB/cosmopedia", "web_samples_v1", split="train", streaming=True)
     model = AutoModelForCausalLM.from_pretrained(training_args.pretrained_model,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
     model.to('cuda')
     trainer = SFTTrainer(
