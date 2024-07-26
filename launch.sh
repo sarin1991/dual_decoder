@@ -1,4 +1,5 @@
 python main.py \
+  --pretrained_model "mistralai/Mistral-7B-Instruct-v0.3" \
   --config_path "config.json" \
   --output_dir "mistral_out" \
   --dataset_text_field="text" \
