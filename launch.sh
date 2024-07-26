@@ -15,3 +15,4 @@ python main.py \
   --save_steps 500 \
   --lr_scheduler_type cosine \
   --model_output_path "mistral_checkpoint"
+  
