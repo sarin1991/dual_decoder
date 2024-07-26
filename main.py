@@ -33,7 +33,6 @@ def main():
         model=model,
         args=training_args,
         train_dataset=train_dataset,
-        max_seq_length=training_args.max_seq_length,
         tokenizer=tokenizer,
     )
     trainer.train()
