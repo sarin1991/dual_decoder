@@ -6,7 +6,7 @@
     "head_dim": 64,
     "n_groups": 8,
     "norm_before_gate": true,
-    "num_mamba_heads": 128,
+    "num_mamba_heads": 64,
     "time_step_max": 0.1,
     "time_step_min": 0.001,
     "time_step_rank": 256,
