@@ -1,6 +1,6 @@
 accelerate launch -m \
     lighteval accelerate \
-    --model_args "pretrained=<path to model>" \
-    --tasks "eval_tasks.txt" \
-    --override_batch_size 32 \
-    --output_dir="./evals/"
+    "pretrained=<path to model>" \
+    "eval_tasks.txt" \
+    --override-batch-size 32 \
+    --output-dir="./evals/"
