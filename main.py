@@ -30,7 +30,7 @@ def main():
     train_dataset = load_dataset("HuggingFaceTB/cosmopedia", "web_samples_v1", split="train", streaming=True)
     if training_args.config_path:
         config = AutoConfig.from_pretrained(training_args.config_path,attn_implementation="flash_attention_2")
-        model = AutoModelForCausalLM.from_config(config)
+        model = AutoModelForCausalLM.from_config(config,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
     else:
         model = AutoModelForCausalLM.from_pretrained(training_args.pretrained_model,attn_implementation="flash_attention_2",torch_dtype=torch.bfloat16)
     model.to('cuda')
